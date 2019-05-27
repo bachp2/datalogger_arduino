@@ -61,6 +61,9 @@ z_vec = np.ones(len(x_vec))
 line1 = []
 line2 = []
 
+vv = 5.0/1023*11989.0/1979
+aa = 5.0/1023*10
+
 if __name__ == '__main__':
     t_end = time.time() + 60 * 5 #run for 5 minutes
     try:
@@ -77,8 +80,8 @@ if __name__ == '__main__':
                     # plt.scatter(i, readings[0])
                     # i+=1
                     seq = []
-                    y_vec[-1] = float(readings[0])
-                    z_vec[-1] = float(readings[1][0:-2])
+                    y_vec[-1] = vv*float(readings[0])
+                    z_vec[-1] = aa*(float(readings[1][0:-2])-437)
                     #print(float(readings[1][0:-2]))
                     [line1,line2] = live_plotter(x_vec,y_vec,z_vec,line1,line2)
                     y_vec = np.append(y_vec[1:],0.0)
