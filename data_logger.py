@@ -1,8 +1,8 @@
 import serial
 import time
-import csv
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 # use ggplot style for more sophisticated visuals
 plt.style.use('ggplot')
@@ -51,8 +51,6 @@ print("connected to: " + ser.portstr)
 
 #this will store the line
 seq = []
-amperage = []
-voltage = []
 
 size = 100
 x_vec = np.linspace(0,1,size+1)[0:-1]
@@ -75,8 +73,6 @@ if __name__ == '__main__':
                 if chr(c) == '\n':
                     #print(joined_seq)
                     readings = joined_seq.split(' ', 2)
-                    amperage.append(readings[0])
-                    voltage.append(readings[1])
                     # plt.scatter(i, readings[0])
                     # i+=1
                     seq = []
@@ -89,11 +85,8 @@ if __name__ == '__main__':
                     break
             # plt.show()
             # plt.pause(0.0001)
-
-        # with open("test_data.csv","a") as f:
-        #         writer = csv.writer(f,delimiter=",")
-        #         writer.writerow([time.time(),decoded_bytes])
     except KeyboardInterrupt:
         print('Interrupted')
         ser.flushInput()
+        np.savetxt("data_dump.csv", np.asarray([y_vec, z_vec]), delimiter=",")
         sys.exit(0)
